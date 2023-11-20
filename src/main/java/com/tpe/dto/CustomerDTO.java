@@ -1,27 +1,18 @@
-package com.tpe.domain;
+package com.tpe.dto;
 
-import lombok.AccessLevel;
+
+import com.tpe.domain.Customer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.HashSet;
-import java.util.Set;
 
-//2
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Customer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class CustomerDTO {
 
     @NotBlank(message = "Name is required!")
     private String name;
@@ -30,13 +21,17 @@ public class Customer {
     private String lastName;
 
     @NotBlank(message = "Email is required!")
-    @Column(unique = true)
     @Email
     private String email;
 
     private String phone;
 
-    @OneToMany(mappedBy = "customer",cascade = CascadeType.REMOVE)
-    private Set<OrderItem> orders=new HashSet<>();
+    public CustomerDTO(Customer customer){
+        this.name=customer.getName();
+        this.lastName= customer.getLastName();
+        this.email= customer.getEmail();
+        this.phone= customer.getPhone();
+    }
+
 
 }

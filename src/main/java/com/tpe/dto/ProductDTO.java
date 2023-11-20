@@ -1,28 +1,19 @@
-package com.tpe.domain;
+package com.tpe.dto;
 
-import lombok.AccessLevel;
+import com.tpe.domain.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-//1
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
+public class ProductDTO {
 
     @NotBlank(message = "Product name is required!")
-    @Column(unique = true)
     private String productName;
 
     @NotBlank(message = "Product brand is required!")
@@ -31,11 +22,9 @@ public class Product {
     @NotNull(message = "Price can not be null!")
     private Double price;
 
-    public Product(String productName, String brand, Double price) {
-        this.productName = productName;
-        this.brand = brand;
-        this.price = price;
+    public ProductDTO(Product product){
+        this.productName=product.getProductName();
+        this.brand=product.getBrand();
+        this.price=product.getPrice();
     }
-
-
 }
